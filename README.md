@@ -54,3 +54,15 @@ src/main.py         # Основные классы
 pyproject.toml  # Конфигурация зависимостей
 poetry.lock     # Точные версии пакетов
 tests/test_main.py # Юнит-тесты
+
+## Покрытие тестами
+
+coverage report
+Name                Stmts   Miss  Cover
+---------------------------------------
+src\__init__.py         0      0   100%
+src\main.py            15      0   100%
+test\__init__.py        0      0   100%
+test\test_main.py      45      0   100%
+---------------------------------------
+TOTAL                  60      0   100%
