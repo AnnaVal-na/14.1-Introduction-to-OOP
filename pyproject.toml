@@ -25,11 +25,3 @@ exclude = '''
   | venv
 )/
 '''
-
-[tool.flake8]
-max-line-length = 88
-exclude = [".git", "__pycache__", "venv"]
-max-complexity = 10
-
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.15.0"
