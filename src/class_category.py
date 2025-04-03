@@ -8,11 +8,15 @@ class Category:
     def __init__(self, name: str, description: str, products: list[Product]):
         self.name = name
         self.description = description
-        self.__products: list[Product] = []  # Явная аннотация типа
+        self.__products: list[Product] = []
         Category.category_count += 1
 
         for product in products:
             self.add_product(product)
+
+    def __str__(self) -> str:
+        total_quantity = sum(p.quantity for p in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def add_product(self, product: Product):
         if not isinstance(product, Product):
@@ -20,13 +24,9 @@ class Category:
                 "Можно добавлять только объекты Product или его "
                 "наследников"
             )
-
         self.__products.append(product)
         Category.product_count += 1
 
     @property
-    def products(self) -> str:  # Добавлена аннотация возвращаемого типа
-        return "\n".join(
-            [f"{p.name}, {p.price} руб. Остаток: {p.quantity} шт."
-             for p in self.__products]
-        )
+    def products(self) -> str:
+        return "\n".join(str(p) for p in self.__products)
