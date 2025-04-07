@@ -1,7 +1,5 @@
 from src.class_category import Category
-from src.class_product import Product
-
-# Старые тесты
+from src.class_product import Product, Smartphone
 
 
 def test_category_initialization():
@@ -17,8 +15,6 @@ def test_add_product():
     category.add_product(product)
     assert "Xiaomi" in category.products
 
-# Новые тесты по заданию 3
-
 
 def test_category_str():
     p1 = Product("A", "Desc", 100.0, 2)
@@ -30,3 +26,24 @@ def test_category_str():
 def test_empty_category_str():
     category = Category("Empty", "Desc", [])
     assert str(category) == "Empty, количество продуктов: 0 шт."
+
+
+def test_add_invalid_product_type():
+    category = Category("Test", "Desc", [])
+
+    try:
+        category.add_product("Not a product")
+        assert False
+    except TypeError as e:
+        assert "только продукты" in str(e)
+
+
+def test_add_valid_subclass():
+    phone = Smartphone("Phone", "Desc", 100.0, 1, "A", "X", "128GB", "Black")
+    category = Category("Tech", "Gadgets", [])
+
+    try:
+        category.add_product(phone)
+        assert len(category.products.split('\n')) == 1
+    except TypeError:
+        assert False
