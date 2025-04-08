@@ -1,4 +1,5 @@
-from src.class_product import Product, Smartphone, LawnGrass
+import pytest
+from src.class_product import Product, Smartphone, LawnGrass, BaseProduct
 
 
 def test_product_initialization():
@@ -63,11 +64,54 @@ def test_lawn_grass_creation():
 
 
 def test_invalid_addition_diff_classes():
-    phone = Smartphone("Phone", "Desc", 100.0, 1, "A", "X", "128GB", "Black")
-    grass = LawnGrass("Grass", "Desc", 50.0, 2, "RU", "14d", "Green")
+    phone = Smartphone(
+        "Phone",
+        "Desc",
+        100.0,
+        1,
+        "A",
+        "X",
+        "128GB",
+        "Black"
+    )
+    grass = LawnGrass(
+        "Grass",
+        "Desc",
+        50.0,
+        2,
+        "RU",
+        "14d",
+        "Green"
+    )
 
     try:
         phone + grass
         assert False
     except TypeError as e:
         assert str(e) == "Нельзя складывать товары разных классов"
+
+
+def test_abstract_class_instantiation():
+    with pytest.raises(TypeError):
+        BaseProduct("Test", "Test", 100.0, 1)
+
+
+def test_repr_mixin():
+    p = Product("Test", "Desc", 100.0, 5)
+    assert repr(p).startswith("Product(name='Test', description='Desc'")
+
+
+def test_smartphone_creation_log(capsys):
+    phone = Smartphone(
+        "Phone",
+        "Desc",
+        100.0,
+        1,
+        95.5,
+        "X",
+        128,
+        "Black"
+    )
+    captured = capsys.readouterr()
+    assert "Создан Smartphone: " in captured.out
+    assert phone is not None
