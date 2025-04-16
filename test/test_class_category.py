@@ -47,3 +47,22 @@ def test_add_valid_subclass():
         assert len(category.products.split('\n')) == 1
     except TypeError:
         assert False
+
+
+# Урок 17.1
+def test_middle_price_with_products():
+    p1 = Product("A", "Desc", 100.0, 2)
+    p2 = Product("B", "Desc", 200.0, 3)
+    category = Category("Test", "Desc", [p1, p2])
+    assert category.middle_price() == 150.0
+
+
+def test_middle_price_empty_category():
+    category = Category("Empty", "Desc", [])
+    assert category.middle_price() == 0.0
+
+
+def test_middle_price_zero_prices():
+    p = Product("Test", "Desc", 0.0, 5)
+    category = Category("Zero", "Desc", [p])
+    assert category.middle_price() == 0.0

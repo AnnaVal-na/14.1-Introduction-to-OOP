@@ -1,5 +1,5 @@
-import pytest
 from src.class_product import Product, Smartphone, LawnGrass, BaseProduct
+import pytest
 
 
 def test_product_initialization():
@@ -115,3 +115,13 @@ def test_smartphone_creation_log(capsys):
     captured = capsys.readouterr()
     assert "Создан Smartphone: " in captured.out
     assert phone is not None
+
+
+# Урок 17.1
+def test_zero_quantity_product():
+    with pytest.raises(ValueError) as exc_info:
+        Product("Test", "Desc", 100.0, 0)
+    assert (
+            str(exc_info.value) ==
+            "Товар с нулевым количеством не может быть добавлен"
+            )
