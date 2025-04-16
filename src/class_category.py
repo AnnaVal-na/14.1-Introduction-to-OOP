@@ -4,15 +4,30 @@ from src.class_product import Product
 class Category:
     category_count: int = 0
     product_count: int = 0
+    __products: list[Product]
 
-    def __init__(self, name: str, description: str, products: list[Product]):
+    def __init__(
+            self,
+            name: str,
+            description: str,
+            products: list[Product]
+    ):
         self.name = name
         self.description = description
-        self.__products: list[Product] = []
+        self.__products = []
         Category.category_count += 1
 
         for product in products:
             self.add_product(product)
+
+    def middle_price(self) -> float:
+        try:
+            total = sum(
+                p.price for p in self.__products
+            )
+            return total / len(self.__products)
+        except ZeroDivisionError:
+            return 0.0
 
     def add_product(self, product: Product):
         if not isinstance(product, Product):
